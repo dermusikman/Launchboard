@@ -1,9 +1,11 @@
 # launchboard
 
+!!! This is pre-alpha, and not yet ready to be used.
+
 ## Goals
 
-Launchboard mimics the functionality of the popular Novation Launchpad on a
-computer keyboard. It supports MIDI and OSC protocols.
+Launchboard (does not yet) mimic the functionality of the popular Novation Launchpad on a
+computer keyboard. It (does not yet) support MIDI and OSC protocols.
 
 Launchboard can be run in headless mode, with the ncurses interface, or tied
 to a GUI.
