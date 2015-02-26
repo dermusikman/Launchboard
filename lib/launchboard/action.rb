@@ -1,30 +1,26 @@
 module Launchboard
   class Action
-    attr_accessor :start_action, :end_action, :loop, :state
-    @start_action = ""
-    @end_action = ""
-    @loop = false
-    @state = :off
-    @receiver = nil
+    attr_accessor :start_action, :end_action, :receiver
+    attr_reader :loop_on
 
-    def enabled?
-      @start_action ? true : false
+    def initialize(receiver, start_action, end_action='')
+      @receiver = receiver
+      @start_action = start_action
+      @end_action = end_action
+      @loop_on = false
     end
 
     def loops?
-      @loop ? true : false
+      @end_action.empty? ? false : true
     end
 
     def enact
-      if @loop
-        if @state == :off
-          @receiver.send(@start_action)
-          @state = :on
-        else
-          @receiver.send(@end_action)
-        end
+      if @loop_on
+        @receiver.do(@end_action)
+        @loop_on = false
       else
-        @receiver.send(@start_action)
+        @receiver.do(@start_action)
+        @loop_on = true if loops?
       end
     end
   end
