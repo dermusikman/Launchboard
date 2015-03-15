@@ -17,23 +17,23 @@ module Launchboard
   end
 
   class Keyboard
-    attr_reader :keys
+    attr_reader :key_hash, :key_array
     def initialize
-      @keys = []
+      @key_hash  = {}
       # qwerty - may add dvorak later?
-      qwerty = %w(q w e r t y u i o p) +
-               %w(a s d f g h j k l ;) +
-               %w(z x c v b n m , . /) +
-               %w(Q W E R T Y U I O P) +
-               %w(A S D F G H J K L :) +
-               %w(Z X C V B N M < > ?)
-      qwerty.each do |key|
-        @keys << Button.new(key)
+      @key_array = %w(q w e r t y u i o p) +
+                   %w(a s d f g h j k l ;) +
+                   %w(z x c v b n m , . /) +
+                   %w(Q W E R T Y U I O P) +
+                   %w(A S D F G H J K L :) +
+                   %w(Z X C V B N M < > ?)
+      @key_array.each do |key|
+        @key_hash[key] = Button.new(key)
       end
     end
 
     def key(qkey)
-      @keys.find { |button| button.key == qkey }
+      @key_hash[qkey]
     end
 
     def row(number, portion=:full)
@@ -47,7 +47,31 @@ module Launchboard
       else
         range = (0 + (number * 10) .. 9 + (number * 10))
       end
-      @keys[range]
+
+      keys = []
+      @key_array[range].each do |key|
+        keys << @key_hash[key]
+      end
+      keys
+    end
+
+    def column(number, portion=:full)
+      # convert number to Array style, and calculate portions
+      number -= 1
+      case portion
+      when :top
+        rows = (0 .. 2)
+      when :bottom
+        rows = (3 .. 5)
+      else
+        rows = (0 .. 5)
+      end
+      keys = []
+      rows.each do |row|
+        k = (row * 10) + number
+        keys << @key_hash[@key_array[k]]
+      end
+      keys
     end
   end
 end

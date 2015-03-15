@@ -1,3 +1,5 @@
+require_relative 'spec_helper'
+
 RSpec.describe Launchboard::Action do
   let(:receiver) do
     double('Launchboard::Receiver', :do => 'nothing')
