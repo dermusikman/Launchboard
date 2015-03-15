@@ -1,4 +1,21 @@
 module Launchboard
+  class Button
+    attr_reader :key
+    attr_accessor :action
+    def initialize(key, action=nil)
+      @key = key
+      @action = action
+    end
+
+    def press
+      begin
+        @action.enact
+      rescue
+        $stderr.puts "\'#{@key}\' pressed, but no action is associated"
+      end
+    end
+  end
+
   class Keyboard
     attr_reader :keys
     def initialize
