@@ -3,7 +3,7 @@ module Launchboard
     attr_accessor :start_action, :end_action, :receiver
     attr_reader :loop_on
 
-    def initialize(receiver, start_action, end_action='')
+    def initialize(receiver, start_action, end_action=nil)
       @receiver = receiver
       @start_action = start_action
       @end_action = end_action
@@ -11,7 +11,7 @@ module Launchboard
     end
 
     def loops?
-      @end_action.empty? ? false : true
+      @end_action.nil? ? false : true
     end
 
     def enact
