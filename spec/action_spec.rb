@@ -5,7 +5,7 @@ RSpec.describe Launchboard::Action do
     double('Launchboard::Receiver', :do => 'nothing')
   end
   let(:start_action) { 'music' }
-  let(:end_action) { '' }
+  let(:end_action) { nil }
   let(:action) do
     Launchboard::Action.new(receiver, start_action, end_action)
   end
