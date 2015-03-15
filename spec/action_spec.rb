@@ -17,9 +17,8 @@ RSpec.describe Launchboard::Action do
 
     describe "#enact" do
       it "does start_action" do
-        pending "this actually does work, but test is broken"
-        action.enact
         expect(action.receiver).to receive(:do).with(start_action)
+        action.enact
       end
     end
   end
@@ -33,7 +32,15 @@ RSpec.describe Launchboard::Action do
       end
     end
 
-    #XXX test enact
+    describe "#enable" do
+      it "toggles start_action and end_action" do
+        expect(action.receiver).to receive(:do).with(start_action)
+        action.enact
+
+        expect(action.receiver).to receive(:do).with(end_action)
+        action.enact
+      end
+    end
   end
 
 end
